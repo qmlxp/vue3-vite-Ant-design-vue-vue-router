@@ -1,4 +1,4 @@
-# vue3 + vite + ant-design-vue
+# vue3 + vite + element plus
 
 ## 基于vue-router搭建的简单的带登录的平台
 
