@@ -1,11 +1,8 @@
 <template>
     <div class="wrap">
         <div class="title">
+            <el-button type="danger" text @click="loginOut">退出</el-button>
             <menu-part></menu-part>
-            <!-- <span :class="{ 'is-active': isActive == `/${item.path}` }"
-                v-for="item in titleOptions[0] && titleOptions[0].children" @click="handleRoute(item)">
-                {{ item.title }}
-            </span> -->
         </div>
         <div class="content">
             <div class="contain">
@@ -22,20 +19,29 @@ import { reactive, ref } from "@vue/reactivity";
 import { computed, onMounted } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
 import menuPart from './menu.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
-let titleOptions = ref([]);
 let route = useRouter();
-onMounted(() => {
-    titleOptions.value = route.options.routes;
-})
-let isActive = computed(() => {
-    return route.currentRoute.value.path;
-})
-
-function handleRoute(item) {
-    if (route.currentRoute.value.path != `/${item.path}`) {
-        route.push(item.path);
-    }
+function loginOut() {
+    ElMessageBox.confirm(
+        '是否要退出该系统?',
+        '二次确认',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true,
+        }
+    )
+        .then(() => {
+            route.push('/login');
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '取消退出',
+            })
+        })
 }
 </script>
 <style lang="scss" scoped>
